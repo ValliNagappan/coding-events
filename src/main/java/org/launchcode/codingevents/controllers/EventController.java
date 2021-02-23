@@ -3,7 +3,9 @@ package org.launchcode.codingevents.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +14,10 @@ import java.util.List;
 @RequestMapping("events")
 public class EventController {
 
+    private static List<String> events = new ArrayList<>();
+
     @GetMapping
     public String returnIndex(Model model){
-        List<String> events = new ArrayList<String>();
-        events.add("playing a game");
-        events.add("Cooking favourite food");
-        events.add("Singing a song");
-        events.add("Learning Java");
-        events.add("Watching movies");
-
         model.addAttribute("events", events);
         return "events/index";
     }
@@ -30,4 +27,10 @@ public class EventController {
         return "events/create";
     }
 
+    @PostMapping("create")
+    public String createEvent(@RequestParam String eventName){
+        events.add(eventName);
+        //redirect to th route path for this specific controller
+        return "redirect:";
+    }
 }
